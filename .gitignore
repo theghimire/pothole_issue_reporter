@@ -1,0 +1,6 @@
+uploads/
+*.log
+.DS_Store
+db.php
+schema.sql
+setup_admin.php
