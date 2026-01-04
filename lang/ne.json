@@ -104,5 +104,12 @@
     "Save Changes": "परिवर्तनहरू बचत गर्नुहोस्",
     "No reports found matching the criteria.": "कुनै रिपोर्ट फेला परेन।",
     "Potential Proxy": "शंकास्पद स्थान",
-    "Unknown": "अज्ञात"
+    "Unknown": "अज्ञात",
+    "Priority": "प्राथमिकता",
+    "Reports": "रिपोर्ट संख्या",
+    "HIGH": "उच्च",
+    "Normal": "सामान्य",
+    "HIGH PRIORITY": "उच्च प्राथमिकता",
+    "Total Reports": "जम्मा रिपोर्ट",
+    "Report noted! This issue already has :count reports and is prioritized.": "रिपोर्ट प्राप्त भयो! यो समस्यामा पहिले नै :count रिपोर्टहरू छन् र यसलाई प्राथमिकता दिइएको छ।"
 }

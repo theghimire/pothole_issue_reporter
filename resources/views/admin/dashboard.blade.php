@@ -84,7 +84,8 @@
                         <tr>
                             <th class="ps-3 border-0">{{ __('Ticket ID') }}</th>
                             <th class="border-0">{{ __('Status') }}</th>
-                            <th class="border-0 text-center">{{ __('Date') }}</th>
+                            <th class="border-0 text-center">{{ __('Priority') }}</th>
+                            <th class="border-0 text-center">{{ __('Reports') }}</th>
                             <th class="border-0 text-center">{{ __('Verification') }}</th>
                             <th class="border-0 no-print text-center">{{ __('Photo') }}</th>
                             <th class="border-0 no-print text-end pe-3">{{ __('Actions') }}</th>
@@ -100,7 +101,16 @@
                                         {{ __($report->status) }}
                                     </span>
                                 </td>
-                                <td class="text-center">{{ \Carbon\Carbon::parse($report->created_at)->format('d/m/Y') }}</td>
+                                <td class="text-center">
+                                    @if($report->is_high_priority)
+                                        <span class="badge bg-danger animate-pulse shadow-sm">🚨 {{ __('HIGH') }}</span>
+                                    @else
+                                        <span class="badge bg-light text-muted border">{{ __('Normal') }}</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <span class="fw-bold">{{ $report->report_count }}</span>
+                                </td>
                                 <td class="text-center">
                                     @if($report->capture_lat)
                                         @php 
@@ -171,12 +181,16 @@
                                             @csrf
                                             <input type="hidden" name="ticket_id" value="{{ $report->ticket_id }}">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">{{ __('Manage Ticket') }}: {{ $report->ticket_id }}</h5>
+                                                <h5 class="modal-title">{{ __('Manage Ticket') }}: {{ $report->ticket_id }} 
+                                                    @if($report->is_high_priority)
+                                                        <span class="badge bg-danger ms-2">{{ __('HIGH PRIORITY') }}</span>
+                                                    @endif
+                                                </h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="mb-3">
-                                                    <p class="small text-muted mb-1 fw-bold text-uppercase">{{ __('Citizen Report:') }}</p>
+                                                    <p class="small text-muted mb-1 fw-bold text-uppercase">{{ __('Citizen Report:') }} ({{ $report->report_count }} {{ __('Total Reports') }})</p>
                                                     <div class="row g-2">
                                                         <div class="col-8">
                                                             <div class="p-2 bg-light rounded small h-100">{{ $report->description }}</div>
@@ -253,7 +267,7 @@
                             </div>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center py-5">{{ __('No reports found matching the criteria.') }}</td>
+                                <td colspan="7" class="text-center py-5">{{ __('No reports found matching the criteria.') }}</td>
                             </tr>
                         @endforelse
                     </tbody>

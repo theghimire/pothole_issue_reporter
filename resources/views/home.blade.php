@@ -96,7 +96,8 @@
                 <div class="carousel-item" style="background: #6272a4;">
                     <div class="carousel-overlay">
                         <h2 class="fw-bold">{{ __('Smart Infrastructure Tracking') }}</h2>
-                        <p class="lead">{{ __("We've implemented a multiple-photo system for better issue verification.") }}</p>
+                        <p class="lead">{{ __("We've implemented a multiple-photo system for better issue verification.") }}
+                        </p>
                     </div>
                 </div>
                 <div class="carousel-item" style="background: #48c774;">
@@ -120,7 +121,8 @@
                 <div class="p-4 bg-white rounded-4 shadow-sm h-100">
                     <i class="bi bi-megaphone fs-1 text-primary mb-3 d-block"></i>
                     <h3>{{ __('Found a Pothole?') }}</h3>
-                    <p class="text-muted mb-4">{{ __('Click below to submit a new report with photos and GPS location.') }}</p>
+                    <p class="text-muted mb-4">{{ __('Click below to submit a new report with photos and GPS location.') }}
+                    </p>
                     <a href="{{ route('report') }}" class="btn btn-action btn-report w-100">{{ __('REPORT AN ISSUE') }}</a>
                 </div>
             </div>
@@ -138,11 +140,6 @@
         <div class="table-container">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h4 class="mb-0">{{ __('Public Issue Log') }}</h4>
-                <div class="input-group w-50">
-                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
-                    <input type="text" id="tableSearch" class="form-control bg-light border-start-0"
-                        placeholder="{{ __('Search by description...') }}">
-                </div>
             </div>
 
             <div class="table-responsive">
@@ -202,15 +199,6 @@
 
 @section('extra_js')
     <script>
-        // Simple search filter
-        document.getElementById('tableSearch').addEventListener('keyup', function () {
-            let value = this.value.toLowerCase();
-            let rows = document.querySelectorAll('#complaintTable tbody tr');
-
-            rows.forEach(row => {
-                let text = row.textContent.toLowerCase();
-                row.style.display = text.includes(value) ? '' : 'none';
-            });
-        });
+        // No additional scripts required.
     </script>
 @endsection

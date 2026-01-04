@@ -104,5 +104,12 @@
     "Save Changes": "Save Changes",
     "No reports found matching the criteria.": "No reports found matching the criteria.",
     "Potential Proxy": "Potential Proxy",
-    "Unknown": "Unknown"
+    "Unknown": "Unknown",
+    "Priority": "Priority",
+    "Reports": "Reports",
+    "HIGH": "HIGH",
+    "Normal": "Normal",
+    "HIGH PRIORITY": "HIGH PRIORITY",
+    "Total Reports": "Total Reports",
+    "Report noted! This issue already has :count reports and is prioritized.": "Report noted! This issue already has :count reports and is prioritized."
 }

@@ -66,6 +66,28 @@ class PotholeController extends Controller
         // Create the issue report
         $ticketId = 'PTH-' . strtoupper(substr(uniqid(), -6));
 
+        // Check for duplicate reports within ~50m (0.0005 deg)
+        $threshold = 0.0005;
+        $duplicate = DB::table('issues')
+            ->whereBetween('latitude', [$request->latitude - $threshold, $request->latitude + $threshold])
+            ->whereBetween('longitude', [$request->longitude - $threshold, $request->longitude + $threshold])
+            ->whereIn('status', ['Pending', 'Ongoing'])
+            ->first();
+
+        if ($duplicate) {
+            $newCount = $duplicate->report_count + 1;
+            $isHigh = ($newCount >= 5) ? true : $duplicate->is_high_priority;
+
+            DB::table('issues')->where('id', $duplicate->id)->update([
+                'report_count' => $newCount,
+                'is_high_priority' => $isHigh,
+                'updated_at' => now(),
+            ]);
+
+            return redirect()->route('report.success', ['ticket_id' => $duplicate->ticket_id])
+                ->with('success', __('Report noted! This issue already has :count reports and is prioritized.', ['count' => $newCount]));
+        }
+
         DB::table('issues')->insert([
             'ticket_id' => $ticketId,
             'name' => $request->name,
@@ -77,6 +99,8 @@ class PotholeController extends Controller
             'capture_lat' => $request->capture_lat,
             'capture_lng' => $request->capture_lng,
             'status' => 'Pending',
+            'report_count' => 1,
+            'is_high_priority' => false,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
