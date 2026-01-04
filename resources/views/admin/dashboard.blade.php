@@ -114,15 +114,17 @@
                                 <td class="text-center">
                                     @if($report->capture_lat)
                                         @php 
-                                            $dist = abs($report->latitude - $report->capture_lat) + abs($report->longitude - $report->capture_lng);
+                                            // Anti-fraud check: captured location vs. reported location
+                                            $distance = sqrt(pow($report->latitude - $report->capture_lat, 2) + pow($report->longitude - $report->capture_lng, 2));
+                                            $isNear = $distance < 0.001; // Approx 100m
                                         @endphp
-                                        @if($dist < 0.001)
-                                            <span class="badge bg-success-subtle text-success border border-success">{{ __('Verified') }}</span>
+                                        @if($isNear)
+                                            <span class="badge bg-success shadow-sm" title="{{ __('Reported location matches photo location.') }}"><i class="bi bi-patch-check-fill me-1"></i> {{ __('GPS Verified') }}</span>
                                         @else
-                                            <span class="badge bg-danger-subtle text-danger border border-danger" title="Reported location differs from photo location">🚨 {{ __('Potential Proxy') }}</span>
+                                            <span class="badge bg-warning text-dark shadow-sm" title="{{ __('Photo was taken far from reported location.') }}"><i class="bi bi-geo-alt me-1"></i> {{ __('Potential Proxy') }}</span>
                                         @endif
                                     @else
-                                        <span class="badge bg-light text-muted border">{{ __('Unknown') }}</span>
+                                        <span class="badge bg-secondary shadow-sm" title="{{ __('No GPS data found in photo.') }}"><i class="bi bi-question-circle me-1"></i> {{ __('Unknown') }}</span>
                                     @endif
                                 </td>
                                 <td class="no-print text-center">
@@ -189,8 +191,10 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <p class="small text-muted mb-1 fw-bold text-uppercase">{{ __('Citizen Report:') }} ({{ $report->report_count }} {{ __('Total Reports') }})</p>
+                                                    <p class="small text-muted mb-1 fw-bold text-uppercase">{{ __('Issue Details:') }} ({{ $report->report_count }} {{ __('Total Reports') }})</p>
+                                                    <div class="p-2 bg-light rounded small mb-2 border-start border-4 border-primary">
+                                                        <strong>{{ __('Location') }}:</strong> {{ $report->location_name ?? 'Ward '.$report->ward }} ({{ $report->latitude }}, {{ $report->longitude }})
+                                                    </div>
                                                     <div class="row g-2">
                                                         <div class="col-8">
                                                             <div class="p-2 bg-light rounded small h-100">{{ $report->description }}</div>

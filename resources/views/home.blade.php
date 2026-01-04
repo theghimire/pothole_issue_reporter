@@ -140,6 +140,11 @@
         <div class="table-container">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h4 class="mb-0">{{ __('Public Issue Log') }}</h4>
+                <div class="input-group w-50">
+                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-geo-alt"></i></span>
+                    <input type="text" id="locationSearch" class="form-control bg-light border-start-0"
+                        placeholder="{{ __('Search by location...') }}">
+                </div>
             </div>
 
             <div class="table-responsive">
@@ -149,6 +154,7 @@
                             <th>{{ __('Ticket ID') }}</th>
                             <th>{{ __('Submitted Date') }}</th>
                             <th>{{ __('Status') }}</th>
+                            <th>{{ __('Location') }}</th>
                             <th>{{ __('Description') }}</th>
                             <th class="text-end">{{ __('Photos') }}</th>
                         </tr>
@@ -163,6 +169,12 @@
                                         class="status-badge @if($issue->status == 'Pending') bg-warning-subtle text-warning @elseif($issue->status == 'Ongoing') bg-info-subtle text-info @elseif($issue->status == 'Completed') bg-success-subtle text-success @else bg-danger-subtle text-danger @endif">
                                         {{ __($issue->status) }}
                                     </span>
+                                </td>
+                                <td>
+                                    <span
+                                        class="fw-bold location-text">{{ $issue->location_name ?? __('Ward') . ' ' . $issue->ward }}</span>
+                                    <div class="small text-muted">{{ round($issue->latitude, 4) }},
+                                        {{ round($issue->longitude, 4) }}</div>
                                 </td>
                                 <td>
                                     <span class="text-truncate d-inline-block" style="max-width: 250px;">
@@ -187,7 +199,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center py-4 text-muted">{{ __('No potholes reported yet.') }}</td>
+                                <td colspan="6" class="text-center py-4 text-muted">{{ __('No potholes reported yet.') }}</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -199,6 +211,18 @@
 
 @section('extra_js')
     <script>
-        // No additional scripts required.
+        // Location search filter
+        document.getElementById('locationSearch').addEventListener('keyup', function () {
+            let value = this.value.toLowerCase();
+            let rows = document.querySelectorAll('#complaintTable tbody tr');
+
+            rows.forEach(row => {
+                let locationCell = row.querySelector('.location-text');
+                if (locationCell) {
+                    let text = locationCell.textContent.toLowerCase();
+                    row.style.display = text.includes(value) ? '' : 'none';
+                }
+            });
+        });
     </script>
 @endsection

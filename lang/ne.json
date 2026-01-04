@@ -111,5 +111,9 @@
     "Normal": "सामान्य",
     "HIGH PRIORITY": "उच्च प्राथमिकता",
     "Total Reports": "जम्मा रिपोर्ट",
-    "Report noted! This issue already has :count reports and is prioritized.": "रिपोर्ट प्राप्त भयो! यो समस्यामा पहिले नै :count रिपोर्टहरू छन् र यसलाई प्राथमिकता दिइएको छ।"
+    "Report noted! This issue already has :count reports and is prioritized.": "रिपोर्ट प्राप्त भयो! यो समस्यामा पहिले नै :count रिपोर्टहरू छन् र यसलाई प्राथमिकता दिइएको छ।",
+    "GPS Verified": "GPS प्रमाणित",
+    "Location": "स्थान",
+    "Search by location...": "स्थान अनुसार खोज्नुहोस्...",
+    "Issue Details:": "समस्याको विवरण:"
 }

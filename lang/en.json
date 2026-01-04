@@ -111,5 +111,9 @@
     "Normal": "Normal",
     "HIGH PRIORITY": "HIGH PRIORITY",
     "Total Reports": "Total Reports",
-    "Report noted! This issue already has :count reports and is prioritized.": "Report noted! This issue already has :count reports and is prioritized."
+    "Report noted! This issue already has :count reports and is prioritized.": "Report noted! This issue already has :count reports and is prioritized.",
+    "GPS Verified": "GPS Verified",
+    "Location": "Location",
+    "Search by location...": "Search by location...",
+    "Issue Details:": "Issue Details:"
 }

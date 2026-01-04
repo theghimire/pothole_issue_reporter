@@ -66,8 +66,8 @@ class PotholeController extends Controller
         // Create the issue report
         $ticketId = 'PTH-' . strtoupper(substr(uniqid(), -6));
 
-        // Check for duplicate reports within ~50m (0.0005 deg)
-        $threshold = 0.0005;
+        // Check for duplicate reports within ~100m (0.001 deg)
+        $threshold = 0.001;
         $duplicate = DB::table('issues')
             ->whereBetween('latitude', [$request->latitude - $threshold, $request->latitude + $threshold])
             ->whereBetween('longitude', [$request->longitude - $threshold, $request->longitude + $threshold])
@@ -93,6 +93,7 @@ class PotholeController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'ward' => $request->ward,
+            'location_name' => $request->location_name ?? null,
             'photo' => json_encode($paths),
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
